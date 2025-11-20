@@ -4,7 +4,7 @@
 ![PHP](https://img.shields.io/badge/PHP-8.1+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-A clean and professional e-commerce application built with Laravel, demonstrating best practices in MVC architecture, authentication, and role-based access control.
+A clean and professional e-commerce application built with Laravel
 
 ---
 
@@ -301,13 +301,6 @@ sudo chmod -R 775 storage bootstrap/cache
 
 ---
 
-## 📚 Learning Resources
-
-- [Laravel Documentation](https://laravel.com/docs)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Alpine.js](https://alpinejs.dev)
-
----
 
 ## 🎯 Future Enhancements
 
@@ -330,6 +323,6 @@ This project is open-sourced software licensed under the [MIT license](https://o
 
 ## 👨‍💻 Author
 
-Built by Eulah as a Laravel project demonstrating MVC architecture, authentication, and CRUD operations.
+Built by Eulah with love
 
 ---
