@@ -1,0 +1,113 @@
+# Laravel & PHP
+/vendor/
+/node_modules/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+.env
+.env.backup
+.env.production
+.env.local
+.env.*.local
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+*.log
+
+# IDE & Editor
+/.fleet
+/.idea
+/.vscode
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+*.tmproj
+*.iml
+.buildpath
+.externalToolBuilders/
+nbproject/
+
+# Build & Compiled Assets
+/public/build
+/public/css
+/public/js
+/public/mix-manifest.json
+/public/hot
+mix-manifest.json
+webpack-stats.json
+
+# Testing
+/.phpunit.cache
+/coverage
+/.phpunit.cache/
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Composer
+composer.phar
+composer.lock
+
+# NPM & Build Tools
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.yarn/
+.pnp.*
+.npm
+.eslintcache
+
+# OS Files
+Thumbs.db
+.DS_Store
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Bootstrap Cache
+/bootstrap/cache/*.php
+!/bootstrap/cache/.gitignore
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~.nib
+*.orig
+
+# Documentation build
+/docs/_build/
+/docs/.doctrees/
+
+# Laravel specific
+.rr.yaml
+rr
+Homestead.yaml
+Homestead.json
+/.vagrant
+.phpunit.result.cache
+.php-cs-fixer.cache
+.php_cs.cache
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+

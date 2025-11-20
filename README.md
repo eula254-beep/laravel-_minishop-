@@ -1,31 +1,31 @@
 # MiniShop - Laravel E-Commerce Application
 
-![Laravel](https://img.shields.io/badge/Laravel-11-red.svg)
-![PHP](https://img.shields.io/badge/PHP-8.2+-blue.svg)
+![Laravel](https://img.shields.io/badge/Laravel-10-red.svg)
+![PHP](https://img.shields.io/badge/PHP-8.1+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
 A clean and professional e-commerce application built with Laravel, demonstrating best practices in MVC architecture, authentication, and role-based access control.
 
 ---
 
-## 📋 Project Overview
+## 📋 Overview
 
-**MiniShop** is a test e-commerce application showcasing:
+**MiniShop** is a Laravel e-commerce application showcasing:
 - **MVC Architecture**: Strict separation of concerns
 - **Role-Based Access Control**: Admin and Customer roles
 - **Product Management**: Full CRUD operations for administrators
 - **Public Shop**: Customer-facing product catalog
 - **Responsive Design**: Mobile-first UI with Tailwind CSS
-- **Clean Code**: Well-commented, maintainable codebase
+- **Authentication**: User login and registration
 
 ---
 
 ## 🚀 Features
 
 ### Customer Features
-- Browse available products in a responsive grid layout
+- Browse products in a responsive grid layout
 - View detailed product information
-- See product availability status
+- User registration and login
 - Responsive design for mobile and desktop
 
 ### Admin Features
@@ -39,27 +39,27 @@ A clean and professional e-commerce application built with Laravel, demonstratin
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Laravel 10/11
-- **Language**: PHP 8.2+
-- **Database**: MySQL (or SQLite for simplicity)
-- **Frontend**: Blade Templates + Tailwind CSS (CDN)
-- **Authentication**: Laravel Breeze
-- **JavaScript**: Alpine.js (for minimal interactivity)
+- **Framework**: Laravel 10
+- **Language**: PHP 8.1+
+- **Database**: MySQL
+- **Frontend**: Blade Templates + Tailwind CSS
+- **JavaScript**: Alpine.js
 
 ---
 
 ## 📦 Installation & Setup
 
 ### Prerequisites
-- PHP 8.2 or higher
+- PHP 8.1 or higher
 - Composer
-- MySQL or SQLite
-- Node.js & NPM (for Laravel Breeze assets)
+- MySQL
+- Node.js & NPM
+- XAMPP (or similar local server)
 
 ### Step 1: Clone the Repository
 ```bash
-git clone <repository-url>
-cd minishop
+git clone https://github.com/eula254-beep/laravel-_minishop-.git
+cd laravel-_minishop-
 ```
 
 ### Step 2: Install Dependencies
@@ -67,61 +67,47 @@ cd minishop
 # Install PHP dependencies
 composer install
 
-# Install Node dependencies (for Breeze)
+# Install Node dependencies
 npm install
 ```
 
 ### Step 3: Environment Configuration
 ```bash
-# Copy environment file
-cp .env.example .env
-
-# Generate application key
-php artisan key:generate
-```
-
-### Step 4: Database Setup
-Edit your `.env` file with database credentials:
-```env
+# The .env file should already exist, verify database settings
+# Make sure these match your local MySQL setup:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=minishop
 DB_USERNAME=root
-DB_PASSWORD=your_password
+DB_PASSWORD=
 ```
 
-**Or use SQLite** (simpler for testing):
-```env
-DB_CONNECTION=sqlite
-# DB_DATABASE=/absolute/path/to/database.sqlite
-```
+### Step 4: Start MySQL
+- Open XAMPP Control Panel
+- Start MySQL service
+- Or run: `C:\xampp\mysql_start.bat`
 
-If using SQLite, create the database file:
+### Step 5: Create Database
 ```bash
-touch database/database.sqlite
+# Using MySQL CLI
+C:\xampp\mysql\bin\mysql.exe -u root -e "CREATE DATABASE IF NOT EXISTS minishop;"
 ```
 
-### Step 5: Run Migrations & Seeders
+### Step 6: Run Migrations & Seeders
 ```bash
 # Run migrations and seed the database
 php artisan migrate:fresh --seed
 ```
 
-This will create:
+This creates:
 - 1 Admin user
 - 1 Customer user
 - 10 sample products
 
-### Step 6: Create Storage Link
+### Step 7: Build Frontend Assets
 ```bash
-# Create symbolic link for product images
-php artisan storage:link
-```
-
-### Step 7: Build Assets
-```bash
-# Compile frontend assets (Breeze)
+# Build assets for production
 npm run build
 
 # Or run in development mode with hot reload
@@ -130,10 +116,11 @@ npm run dev
 
 ### Step 8: Start Development Server
 ```bash
+# Start Laravel server
 php artisan serve
-```
 
-Visit: `http://localhost:8000`
+# Visit: http://127.0.0.1:8000
+```
 
 ---
 
@@ -142,207 +129,196 @@ Visit: `http://localhost:8000`
 ### Admin Account
 - **Email**: `admin@minishop.com`
 - **Password**: `password`
-- **Access**: Full product management dashboard at `/admin/products`
+- **Access**: `/admin/products`
 
 ### Customer Account
 - **Email**: `client@minishop.com`
 - **Password**: `password`
-- **Access**: Public shop view only
+- **Access**: Public shop only
 
 ---
 
 ## 📁 Project Structure
 
 ```
-minishop/
+laravel-_minishop-/
 ├── app/
 │   ├── Http/
 │   │   ├── Controllers/
-│   │   │   ├── Admin/
-│   │   │   │   └── ProductController.php    # Admin CRUD operations
-│   │   │   └── Shop/
-│   │   │       └── ShopController.php       # Public shop views
-│   │   ├── Middleware/
-│   │   │   └── IsAdmin.php                  # Role-based access middleware
-│   │   └── Kernel.php                       # Middleware registration
+│   │   │   ├── Admin/ProductController.php     # Admin CRUD
+│   │   │   ├── Shop/ShopController.php         # Public shop
+│   │   │   └── Auth/                           # Login/Register
+│   │   └── Middleware/
+│   │       └── IsAdmin.php                     # Admin access control
 │   └── Models/
-│       ├── User.php                         # User model with role methods
-│       └── Product.php                      # Product model with scopes
+│       ├── User.php                            # User with roles
+│       └── Product.php                         # Product model
 ├── database/
-│   ├── migrations/
-│   │   ├── xxxx_add_role_to_users_table.php
-│   │   └── xxxx_create_products_table.php
-│   └── seeders/
-│       ├── DatabaseSeeder.php               # Main seeder orchestrator
-│       ├── UserSeeder.php                   # Seeds admin & customer users
-│       └── ProductSeeder.php                # Seeds 10 sample products
+│   ├── migrations/                             # Database structure
+│   └── seeders/                                # Sample data
 ├── resources/
 │   └── views/
-│       ├── layouts/
-│       │   └── app.blade.php                # Master layout with Tailwind CSS
-│       ├── admin/
-│       │   ├── dashboard.blade.php          # Product management table
-│       │   ├── create.blade.php             # Create product form
-│       │   └── edit.blade.php               # Edit product form
-│       └── shop/
-│           ├── index.blade.php              # Product grid (public)
-│           └── show.blade.php               # Product details (public)
+│       ├── layouts/app.blade.php               # Master layout
+│       ├── admin/                              # Admin dashboard
+│       ├── shop/                               # Public shop
+│       └── auth/                               # Login/Register
 └── routes/
-    └── web.php                              # Application routes
+    └── web.php                                 # Application routes
 ```
 
 ---
 
-## 🗺️ Routes & Architecture
+## 🗺️ Routes
 
-### Route Organization Explained
+### Public Routes
+- `GET /` - Product listing
+- `GET /products/{product}` - Product details
+- `GET /login` - Login page
+- `POST /login` - Login action
+- `GET /register` - Registration page
+- `POST /register` - Registration action
+- `POST /logout` - Logout
 
-The application uses **three distinct route groups** to maintain clean separation:
-
-#### 1. Public Routes (Shop)
-```php
-Route::get('/', [ShopController::class, 'index'])->name('shop.index');
-Route::get('/products/{product}', [ShopController::class, 'show'])->name('shop.show');
-```
-- **Purpose**: Accessible to all visitors (guests and authenticated users)
-- **Controller**: `Shop/ShopController` handles public-facing product views
-- **Why**: Separates customer-facing logic from admin operations
-
-#### 2. Authenticated User Routes
-```php
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit']);
-    // ... more profile routes
-});
-```
-- **Purpose**: Profile management (from Laravel Breeze)
-- **Middleware**: `auth` ensures user is logged in
-- **Why**: Standard user account management
-
-#### 3. Admin Routes
-```php
-Route::prefix('admin')
-    ->name('admin.')
-    ->middleware(['auth', 'isAdmin'])
-    ->group(function () {
-        Route::resource('products', AdminProductController::class);
-    });
-```
-- **Purpose**: Product management CRUD operations
-- **Prefix**: All routes start with `/admin` for clear URL structure
-- **Middleware**: 
-  - `auth`: Ensures user is logged in
-  - `isAdmin`: Custom middleware checks if user has admin role
-- **Resource Route**: Automatically generates 7 RESTful routes (index, create, store, show, edit, update, destroy)
-- **Why**: Provides secure, organized admin panel with minimal code
-
-### Controller Architecture
-
-#### Admin/ProductController
-- **Responsibility**: Handle all admin product CRUD operations
-- **Methods**: 
-  - `index()`: List all products
-  - `create()`: Show create form
-  - `store()`: Save new product
-  - `edit()`: Show edit form
-  - `update()`: Update existing product
-  - `destroy()`: Delete product
-- **Why Separate**: Admin logic includes validation, file uploads, and database operations
-
-#### Shop/ShopController
-- **Responsibility**: Display products to customers
-- **Methods**:
-  - `index()`: Show product grid (only available products)
-  - `show()`: Show single product details
-- **Why Separate**: Customer views are read-only and focus on presentation
+### Admin Routes (Protected)
+- `GET /admin/products` - Product dashboard
+- `GET /admin/products/create` - Create form
+- `POST /admin/products` - Store product
+- `GET /admin/products/{id}/edit` - Edit form
+- `PUT /admin/products/{id}` - Update product
+- `DELETE /admin/products/{id}` - Delete product
 
 ---
 
-## 🧪 Database Schema
+## 🗄️ Database Schema
 
 ### Users Table
-| Column             | Type      | Notes                          |
-|--------------------|-----------|--------------------------------|
-| id                 | bigint    | Primary key                    |
-| name               | varchar   | User's full name               |
-| email              | varchar   | Unique email                   |
-| **role**           | varchar   | 'admin' or 'customer'          |
-| password           | varchar   | Hashed password                |
-| email_verified_at  | timestamp | Nullable                       |
-| remember_token     | varchar   | For "remember me" functionality|
-| created_at         | timestamp |                                |
-| updated_at         | timestamp |                                |
+| Column       | Type      | Description                |
+|--------------|-----------|----------------------------|
+| id           | bigint    | Primary key                |
+| name         | varchar   | User's name                |
+| email        | varchar   | Unique email               |
+| role         | varchar   | 'admin' or 'customer'      |
+| password     | varchar   | Hashed password            |
 
 ### Products Table
-| Column       | Type       | Notes                          |
-|--------------|------------|--------------------------------|
-| id           | bigint     | Primary key                    |
-| name         | varchar    | Product name                   |
-| price        | decimal    | Product price (10,2)           |
-| description  | text       | Detailed description           |
-| image_path   | varchar    | Path to product image          |
-| available    | boolean    | Availability status            |
-| created_at   | timestamp  |                                |
-| updated_at   | timestamp  |                                |
+| Column       | Type       | Description               |
+|--------------|------------|---------------------------|
+| id           | bigint     | Primary key               |
+| name         | varchar    | Product name              |
+| price        | decimal    | Product price             |
+| description  | text       | Product description       |
+| image_path   | varchar    | Path to product image     |
+| available    | boolean    | Availability status       |
 
 ---
 
-## 🎨 UI/UX Features
+## 🔧 Common Commands
 
-- **Responsive Grid Layout**: Product cards adapt to screen size (1-4 columns)
-- **Tailwind CSS**: Utility-first CSS framework via CDN (no build step required)
-- **Alpine.js**: Lightweight JavaScript for dropdown menus and mobile navigation
-- **Flash Messages**: Success/error notifications with auto-dismiss
-- **Image Handling**: Graceful fallback for products without images
-- **Loading States**: Clear visual feedback for all actions
+### Development
+```bash
+# Start server
+php artisan serve
 
----
+# Watch frontend changes
+npm run dev
 
-## 🔒 Security Features
+# Clear caches
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+```
 
-- **Role-Based Access Control (RBAC)**: Custom `IsAdmin` middleware
-- **CSRF Protection**: Laravel's built-in CSRF tokens on all forms
-- **Password Hashing**: Bcrypt hashing for user passwords
-- **File Upload Validation**: Type and size restrictions on images
-- **Route Protection**: Middleware ensures unauthorized access is prevented
+### Database
+```bash
+# Reset database
+php artisan migrate:fresh --seed
 
----
+# Run migrations only
+php artisan migrate
 
-## 📝 Code Quality
+# Run seeders only
+php artisan db:seed
+```
 
-- **PSR Standards**: Follows PHP coding standards
-- **Comments**: Comprehensive inline documentation
-- **DRY Principle**: Reusable components and layouts
-- **Validation**: Server-side validation on all form submissions
-- **Error Handling**: Graceful error messages for users
+### Laravel Tinker
+```bash
+# Interactive shell
+php artisan tinker
 
----
-
-## 🎓 Learning Objectives
-
-This project demonstrates:
-
-1. **MVC Separation**: Clear distinction between Models, Views, and Controllers
-2. **Laravel Best Practices**: Resource controllers, route grouping, middleware
-3. **Authentication**: Laravel Breeze integration
-4. **Database Design**: Migrations, seeders, and relationships
-5. **Frontend Integration**: Blade templates with modern CSS
-6. **File Uploads**: Handling and storing product images
-7. **Security**: Middleware, validation, and authorization
+# Test queries
+>>> User::all()
+>>> Product::where('available', true)->get()
+```
 
 ---
 
-## 🚧 Future Enhancements
+## 🏗️ Architecture Highlights
 
-Potential additions for extended learning:
-- Shopping cart functionality
-- Order management system
-- Payment gateway integration (Stripe/PayPal)
-- Product categories and filtering
-- Customer reviews and ratings
-- Search functionality
-- Email notifications
-- API endpoints for mobile app
+### MVC Pattern
+- **Models**: Handle data and business logic
+- **Views**: Blade templates for presentation
+- **Controllers**: Process requests and coordinate
+
+### Security Features
+- CSRF protection on all forms
+- Password hashing with bcrypt
+- Role-based middleware (`isAdmin`)
+- Input validation on all forms
+- SQL injection protection (Eloquent ORM)
+
+### Code Quality
+- PSR-12 coding standards
+- Comprehensive inline comments
+- DRY principles
+- Single Responsibility Principle
+- RESTful routing conventions
+
+---
+
+## 🐛 Troubleshooting
+
+### Session Store Error
+```bash
+php artisan config:clear
+php artisan cache:clear
+```
+
+### Route Not Found
+```bash
+php artisan route:clear
+php artisan route:list
+```
+
+### MySQL Connection Error
+- Verify MySQL is running in XAMPP
+- Check `.env` database credentials
+- Ensure database exists
+
+### Permission Errors (Linux/Mac)
+```bash
+sudo chmod -R 775 storage bootstrap/cache
+```
+
+---
+
+## 📚 Learning Resources
+
+- [Laravel Documentation](https://laravel.com/docs)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Alpine.js](https://alpinejs.dev)
+
+---
+
+## 🎯 Future Enhancements
+
+- [ ] Shopping cart functionality
+- [ ] Order management
+- [ ] Payment integration
+- [ ] Email notifications
+- [ ] Product categories
+- [ ] Search functionality
+- [ ] Product reviews
+- [ ] User profile management
 
 ---
 
@@ -354,41 +330,6 @@ This project is open-sourced software licensed under the [MIT license](https://o
 
 ## 👨‍💻 Author
 
-Built with ❤️ using Laravel best practices for educational purposes.
+Built by Eulah as a Laravel project demonstrating MVC architecture, authentication, and CRUD operations.
 
 ---
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**Issue**: "Class 'IsAdmin' not found"
-```bash
-composer dump-autoload
-```
-
-**Issue**: Images not displaying
-```bash
-php artisan storage:link
-```
-
-**Issue**: 404 on routes
-```bash
-php artisan route:cache
-php artisan route:clear
-```
-
-**Issue**: Migration errors
-```bash
-php artisan migrate:fresh --seed
-```
-
----
-
-## 📞 Support
-
-For questions or issues, please open an issue in the repository.
-
----
-
-**Happy Coding! 🚀**

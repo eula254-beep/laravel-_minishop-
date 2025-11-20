@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Shop\ShopController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 | Route Organization:
 | 1. Public routes (Shop) - Accessible to everyone
-| 2. Authenticated routes - Profile management (from Breeze)
+| 2. Authentication routes
 | 3. Admin routes - Protected by auth and isAdmin middleware
 |
 */
@@ -29,14 +30,13 @@ Route::get('/', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/products/{product}', [ShopController::class, 'show'])->name('shop.show');
 
 // ========================================
-// AUTHENTICATED USER ROUTES (Laravel Breeze)
+// AUTHENTICATION ROUTES
 // ========================================
-// Profile management routes for authenticated users
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 
 // ========================================
 // ADMIN ROUTES
@@ -53,5 +53,3 @@ Route::prefix('admin')
         Route::resource('products', AdminProductController::class);
     });
 
-// Include authentication routes (login, register, password reset, etc.)
-require __DIR__.'/auth.php';
